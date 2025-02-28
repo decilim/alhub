@@ -65,28 +65,52 @@ end)
 local Button = SecondTab:CreateButton({
    Name = "ESP",
    Callback = function()
-   local esp_settings = { 
-    textsize = 8,
-    colour = 255,255,255
-}
-local esp = Instance.new("TextLabel",gui)
-            
-esp.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-esp.Text = ""
-esp.Size = UDim2.new(0.0001, 0.00001, 0.0001, 0.00001);
-esp.BorderSizePixel = 4;
-esp.BorderColor3 = Color3.new(esp_settings.colour)
-esp.BorderSizePixel = 0
-esp.Font = "GothamSemibold"
-esp.TextSize = esp_settings.textsize
-esp.TextColor3 = Color3.fromRGB(esp_settings.colour) -- text colour
- 
-game:GetService("RunService").RenderStepped:Connect(function()
-    for i,v in pairs (game:GetService("Players"):GetPlayers()) do
-        if v ~= game:GetService("Players").LocalPlayer and v.Character.Head:FindFirstChild("Cracked esp")==nil  then
-            esp.Text = "{"..v.Name.."}"
+--// Written by depso
+local Players = game:GetService("Players")
+
+local function ApplyHighlight(Player)
+    local Connections = {}
+
+    --// Parts
+    local Character = Player.Character or Player.CharacterAdded:Wait()
+    local Humanoid = Character:WaitForChild("Humanoid")
+    local HightLighter = Instance.new("Highlight", Character)
+
+    local function UpdateFillColor()
+        local DefaultColor = Color3.fromRGB(255, 48, 51)
+        HightLighter.FillColor = (Player.TeamColor and Player.TeamColor.Color) or DefaultColor
     end
+
+    local function Disconnect()
+        HightLighter:Remove()
+        
+        for _, Connection in next, Connections do
+            Connection:Disconnect()
+        end
+    end
+
+    --// Connect functions to events
+    table.insert(Connections, Player:GetPropertyChangedSignal("TeamColor"):Connect(UpdateFillColor))
+    table.insert(Connections, Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+        if Humanoid.Health <= 0 then
+            Disconnect()
+        end
+    end))
 end
-end)
+
+local function HightLightPlayer(Player)
+    if Player.Character then
+        HightLightPlayer(Player)
+    end
+    Player.CharacterAdded:Connect(function()
+        HightLightPlayer(Player)
+    end)
+end
+
+--// Apply highlights to players
+for _, Player in next, Players:GetPlayers() do
+    ApplyHighlight(Player)
+end
+Players.PlayerAdded:Connect(ApplyHighlight)
    end,
 })
