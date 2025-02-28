@@ -85,7 +85,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
     for i,v in pairs (game:GetService("Players"):GetPlayers()) do
         if v ~= game:GetService("Players").LocalPlayer and v.Character.Head:FindFirstChild("Cracked esp")==nil  then
             esp.Text = "{"..v.Name.."}"
-            gui:Clone().Parent = v.Character.Head
     end
 end
 end)
