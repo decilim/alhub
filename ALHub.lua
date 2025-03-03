@@ -34,9 +34,14 @@ local Window = Rayfield:CreateWindow({
    }
 })
 
-local MainTab = Window:CreateTab("👁️| Main", nil) -- Title, Image
+local MainTab = Window:CreateTab("🎪| Main", nil) -- Title, Image
 local SecondTab = Window:CreateTab("👁️| ESP", nil) -- Title, Image
+local ThirdTab = Window:CreateTab("🚩| Teleport", nil) -- Title, Image
+local FourthTab = Window:CreateTab("💃| Animations", nil)
 local MainSection = MainTab:CreateSection("Auto Dodge")
+local SecondSection = SecondTab:CreateSection("ESP")
+local ThirdSection = ThirdTab:CreateSection("Teleport")
+local FourthSection = FourthTab:CreateSection("Animations")
 
 Rayfield:Notify({
    Title = "Script Executed",
@@ -114,3 +119,63 @@ end
 Players.PlayerAdded:Connect(ApplyHighlight)
    end,
 })
+
+local Dropdown = ThirdTab:CreateDropdown({
+    Name = "Teleports",
+    Options = {"Caldera","Cauldron"},
+    CurrentOption = {"Caldera"},
+    MultipleOptions = false,
+    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Options)
+    -- The function that takes place when the selected option is changed
+    -- The variable (Options) is a table of strings for the current selected options
+    end,
+ })
+
+ local Players = game:GetService("Players")
+ local LocalPlayer = Players.LocalPlayer
+ local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+ local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+ 
+ local Animation = Instance.new("Animation")
+ local AnimationID = "rbxassetid://507771019" -- Replace with any animation ID
+ local AnimationTrack = nil
+ 
+ -- Ensure the character has an Animator
+ local function GetOrCreateAnimator(humanoid)
+     local animator = humanoid:FindFirstChildOfClass("Animator")
+     if not animator then
+         animator = Instance.new("Animator")
+         animator.Parent = humanoid
+     end
+     return animator
+ end
+ 
+ -- Toggle Function
+ local Toggle = FourthTab:CreateToggle({
+     Name = "Toggle Animation",
+     CurrentValue = false,
+     Flag = "Toggle1", 
+     Callback = function(Value)
+         if not Humanoid then
+             warn("No humanoid found!")
+             return
+         end
+ 
+         local Animator = GetOrCreateAnimator(Humanoid) -- Ensure Animator exists
+ 
+         if Value then
+             -- Play Animation
+             Animation.AnimationId = AnimationID
+             AnimationTrack = Animator:LoadAnimation(Animation)
+             AnimationTrack:Play()
+         else
+             -- Stop Animation
+             if AnimationTrack then
+                 AnimationTrack:Stop()
+                 AnimationTrack = nil
+             end
+         end
+     end,
+ })
+ 
