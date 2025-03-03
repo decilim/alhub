@@ -1,9 +1,9 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "ArcaneLineageFucker",
+   Name = "BugLineage",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "ArcaneLineageFucker V1",
+   LoadingTitle = "BugLineage V1",
    LoadingSubtitle = "by decilim",
    Theme = "Serenity", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -24,10 +24,10 @@ local Window = Rayfield:CreateWindow({
 
    KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "ArcaneLineageFucker | Key",
+      Title = "BugLineage | Key",
       Subtitle = "Link in discord server",
       Note = "Join discord server", -- Use this to tell the user how to get a key
-      FileName = "RobloxFuckerKey", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      FileName = "BugLineageKey", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = true, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
       Key = {"https://pastebin.com/raw/vADA8ZqN"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
@@ -45,7 +45,7 @@ local FourthSection = FourthTab:CreateSection("Animations")
 
 Rayfield:Notify({
    Title = "Script Executed",
-   Content = "Enjoy ALFucker V1",
+   Content = "Enjoy BugLineage V1",
    Duration = 6.5,
    Image = 4483362458,
 })
@@ -138,7 +138,7 @@ local Dropdown = ThirdTab:CreateDropdown({
  local Humanoid = Character:FindFirstChildOfClass("Humanoid")
  
  local Animation = Instance.new("Animation")
- local AnimationID = "rbxassetid://507771019" -- Replace with any animation ID
+ local AnimationID = "rbxassetid://15694504637" -- Replace with any animation ID
  local AnimationTrack = nil
  
  -- Ensure the character has an Animator
